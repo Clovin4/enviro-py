@@ -10,15 +10,19 @@ class Extract:
         self.data = None
         self.country = "US"
 
-    # take in a single zip code or a list of zip codes
-    def get_weather(self, zip_codes: str or List[str]) -> pd.DataFrame or Dict[pd.DataFrame]:
-        if type(zip_codes) == list:
-            df_dict = {}
+    # take in a single zip code or a list of zip codes and return a dictionary of dataframes or dictionary of a dataframe
+    def get_weather(self, zip_codes: List[str] or str) -> Dict[str, pd.DataFrame]:
+        if isinstance(zip_codes, list):
+            self.data = {}
             for zip_code in zip_codes:
-                res = self.noaa.get_forecasts(zip_code, self.country)
-                df_dict[zip_code] = pd.DataFrame(res)
-            self.data = df_dict
+                self.data[zip_code] = self._get_weather(zip_code)
         else:
-            res = self.noaa.get_forecasts(zip_codes, self.country)
-            self.data = pd.DataFrame(res)
+            self.data = {zip_codes: self._get_weather(zip_codes)}
         return self.data
+    
+    def _get_weather(self, zip_code: str) -> pd.DataFrame:
+        # get the data
+        data = self.noaa.get_forecasts(zip_code, self.country)
+        # convert to dataframe
+        data = pd.DataFrame(data)
+        return data
