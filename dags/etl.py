@@ -20,7 +20,7 @@ print(zipcodes)
 class Extract:
     
     def __init__(self) -> None:
-        self.noaa = NOAA.NOAA()
+        # self.noaa = NOAA.NOAA()
         self.data = None
         self.country = "US"
 

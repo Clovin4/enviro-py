@@ -20,6 +20,9 @@ class Extract:
             self.data = {zip_codes: self._get_weather(zip_codes)}
         return self.data
     
+    def get_environment(self, zip_codes: List[str] or str) -> Dict[str, pd.DataFrame]:
+        pass
+    
     def _get_weather(self, zip_code: str) -> pd.DataFrame:
         # get the data
         data = self.noaa.get_forecasts(zip_code, self.country)
